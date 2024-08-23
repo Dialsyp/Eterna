@@ -4,8 +4,12 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-
+import 'react-native-reanimated';
+import '../constants/output.css'
 import { useColorScheme } from '@/components/useColorScheme';
+import {GestureHandlerRootView} from "react-native-gesture-handler";
+import {Provider} from "react-redux";
+import {store} from "@/redux/store";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,11 +52,17 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          </Stack>
+
+        </ThemeProvider>
+      </Provider>
+
+
   );
 }
